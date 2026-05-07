@@ -22,7 +22,21 @@ const features = [
   { name: 'Alertes', icon: AlertTriangle, color: 'bg-yellow-500/10', iconColor: '#eab308', description: 'Urgences' },
 ];
 
-const Dashboard = ({ onNavigateToChat }: { onNavigateToChat: () => void }) => {
+const Dashboard = ({ 
+  onNavigateToChat,
+  onNavigateToHealth,
+  onNavigateToAlerts,
+  onNavigateToAgri,
+  onNavigateToWeather,
+  onNavigateToTranslator
+}: { 
+  onNavigateToChat: () => void,
+  onNavigateToHealth: () => void,
+  onNavigateToAlerts: () => void,
+  onNavigateToAgri: () => void,
+  onNavigateToWeather: () => void,
+  onNavigateToTranslator: () => void
+}) => {
   const [weather, setWeather] = useState<any>(null);
   const [agriTip, setAgriTip] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -46,6 +60,18 @@ const Dashboard = ({ onNavigateToChat }: { onNavigateToChat: () => void }) => {
     fetchData();
   }, []);
 
+  const handlePress = (name: string) => {
+    switch (name) {
+      case 'MadaChat': onNavigateToChat(); break;
+      case 'MadaHealth': onNavigateToHealth(); break;
+      case 'Alertes': onNavigateToAlerts(); break;
+      case 'Meteo': onNavigateToWeather(); break;
+      case 'MadaAgri': onNavigateToAgri(); break;
+      case 'Traduction': onNavigateToTranslator(); break;
+      default: break;
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-zinc-50">
       <StatusBar barStyle="dark-content" />
@@ -55,10 +81,13 @@ const Dashboard = ({ onNavigateToChat }: { onNavigateToChat: () => void }) => {
           <Text className="text-zinc-500 font-medium">Iray ihany ny hery</Text>
         </View>
         {weather && (
-          <View className="items-end bg-zinc-100 px-4 py-2 rounded-2xl">
+          <TouchableOpacity 
+            onPress={onNavigateToWeather}
+            className="items-end bg-zinc-100 px-4 py-2 rounded-2xl"
+          >
             <Text className="text-xl font-bold text-zinc-900">{Math.round(weather.main?.temp || 0)}°C</Text>
             <Text className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{weather.weather?.[0]?.description || ''}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       </View>
 
@@ -74,7 +103,7 @@ const Dashboard = ({ onNavigateToChat }: { onNavigateToChat: () => void }) => {
           {features.map((item, index) => (
             <TouchableOpacity 
               key={index}
-              onPress={() => item.name === 'MadaChat' ? onNavigateToChat() : null}
+              onPress={() => handlePress(item.name)}
               activeOpacity={0.7}
               className="w-[48%] mb-4"
             >
@@ -94,29 +123,31 @@ const Dashboard = ({ onNavigateToChat }: { onNavigateToChat: () => void }) => {
         </View>
 
         {agriTip && (
-          <Card className="bg-[#007E3A] border-0 mt-2 mb-10">
-            <Card.Header>
-              <View className="flex-row items-center">
-                <View className="bg-white/20 p-2 rounded-xl">
-                  <Sprout color="white" size={20} />
+          <TouchableOpacity onPress={onNavigateToAgri} activeOpacity={0.9}>
+            <Card className="bg-[#007E3A] border-0 mt-2 mb-10">
+              <Card.Header>
+                <View className="flex-row items-center">
+                  <View className="bg-white/20 p-2 rounded-xl">
+                    <Sprout color="white" size={20} />
+                  </View>
+                  <Text className="text-white text-xl font-bold ml-3">MadaAgri Tips</Text>
                 </View>
-                <Text className="text-white text-xl font-bold ml-3">MadaAgri Tips</Text>
-              </View>
-            </Card.Header>
-            <Card.Body>
-              <Text className="text-white text-lg font-bold mb-1">{agriTip.title}</Text>
-              <Text className="text-white/80 text-sm italic mb-3">Période: {agriTip.period}</Text>
-              <Text className="text-white text-base leading-6">
-                "{agriTip.tips}"
-              </Text>
-            </Card.Body>
-            <Card.Footer>
-              <Text className="text-white/60 text-xs font-medium">Source: MadaAssist Agri</Text>
-              <TouchableOpacity className="bg-white/20 px-4 py-2 rounded-xl">
-                <Text className="text-white font-bold text-xs">Voir plus</Text>
-              </TouchableOpacity>
-            </Card.Footer>
-          </Card>
+              </Card.Header>
+              <Card.Body>
+                <Text className="text-white text-lg font-bold mb-1">{agriTip.title}</Text>
+                <Text className="text-white/80 text-sm italic mb-3">Période: {agriTip.period}</Text>
+                <Text className="text-white text-base leading-6">
+                  "{agriTip.tips}"
+                </Text>
+              </Card.Body>
+              <Card.Footer>
+                <Text className="text-white/60 text-xs font-medium">Source: MadaAssist Agri</Text>
+                <View className="bg-white/20 px-4 py-2 rounded-xl">
+                  <Text className="text-white font-bold text-xs">Voir plus</Text>
+                </View>
+              </Card.Footer>
+            </Card>
+          </TouchableOpacity>
         )}
       </ScrollView>
     </SafeAreaView>

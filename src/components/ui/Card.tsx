@@ -4,12 +4,12 @@ import { tv } from 'tailwind-variants';
 
 const card = tv({
   slots: {
-    root: 'bg-white rounded-[32px] overflow-hidden border border-zinc-100 shadow-sm',
-    header: 'p-4 pb-2',
-    body: 'p-4 pt-2 flex-1',
-    footer: 'p-4 pt-2 flex-row items-center justify-between',
-    title: 'text-xl font-bold text-zinc-900',
-    description: 'text-sm text-zinc-500',
+    root: 'bg-white rounded-[24px] overflow-hidden border border-zinc-200/50 shadow-sm',
+    header: 'p-5 pb-2',
+    body: 'p-5 pt-2 flex-1',
+    footer: 'p-5 pt-2 flex-row items-center justify-between',
+    title: 'text-xl font-bold text-zinc-900 tracking-tight',
+    description: 'text-sm text-zinc-500 font-medium',
   },
 });
 

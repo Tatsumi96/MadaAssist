@@ -38,8 +38,23 @@ export const getAgriTips = async () => {
   return response.data;
 };
 
+export const getHealthTips = async () => {
+  const response = await api.get('/health-tips/');
+  return response.data;
+};
+
+export const getAlerts = async () => {
+  const response = await api.get('/weather/alerts/');
+  return response.data;
+};
+
 export const sendChatMessage = async (prompt: string, history: any[] = []) => {
   const response = await api.post('/ai/chat/', { prompt, history });
+  return response.data;
+};
+
+export const translateText = async (text: string, target_lang: string = 'Malagasy') => {
+  const response = await api.post('/ai/translate/', { text, target_lang });
   return response.data;
 };
 

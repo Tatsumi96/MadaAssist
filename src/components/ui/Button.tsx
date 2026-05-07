@@ -13,10 +13,10 @@ const button = tv({
       danger: 'bg-red-500',
     },
     size: {
-      sm: 'px-3 py-1.5 rounded-xl',
-      md: 'px-6 py-3',
-      lg: 'px-8 py-4 rounded-3xl',
-      icon: 'p-3 rounded-2xl w-12 h-12',
+      sm: 'px-4 py-2 rounded-xl',
+      md: 'px-6 py-3.5',
+      lg: 'px-8 py-5 rounded-[20px]',
+      icon: 'p-3.5 rounded-2xl w-14 h-14',
     },
   },
   defaultVariants: {
@@ -53,19 +53,20 @@ export const Button = ({
     <TouchableOpacity
       className={button({ variant, size, className })}
       disabled={loading || props.disabled}
+      activeOpacity={0.7}
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={variant === 'secondary' ? '#000' : '#fff'} />
+        <ActivityIndicator color={variant === 'secondary' || variant === 'outline' || variant === 'ghost' ? '#000' : '#fff'} />
       ) : (
         <>
-          {leftIcon && <View className="mr-2">{leftIcon}</View>}
+          {leftIcon && <View className="mr-2.5">{leftIcon}</View>}
           {label ? (
-            <Text className={`font-bold text-base ${textColor} ${labelClassName}`}>
+            <Text className={`font-semibold text-[16px] ${textColor} ${labelClassName}`}>
               {label}
             </Text>
           ) : children}
-          {rightIcon && <View className="ml-2">{rightIcon}</View>}
+          {rightIcon && <View className="ml-2.5">{rightIcon}</View>}
         </>
       )}
     </TouchableOpacity>
